@@ -45,10 +45,6 @@ def createEvent(array):
 	return event
 			
 
-def calc(event):
-	print "%s \n" % event
-
-
 def parseFile(f):
 	insideEvent = False
 	array = []
