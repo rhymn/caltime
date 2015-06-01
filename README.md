@@ -1,7 +1,7 @@
 # caltime
 
-## Time reporting by using your calendar, I'm using Apple Calendar.
+## Time reporting using Apples Calendar.
 
-Schedule meetings ans such like normal, then run the script to figure out how much time is spent.
+Schedule meetings, work etc. Run the script to figure out how much time is spent.
 
-Support for Apple Calendar only.
+Support for Apple Calendar only so far.

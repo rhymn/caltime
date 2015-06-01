@@ -4,6 +4,16 @@ import datetime
 import re
 import time
 import os, sys
+import argparse
+
+filter = False
+parser = argparse.ArgumentParser(description='Parser for using the Calendar as a Time logger')
+
+parser.add_argument('--filter', type=str, help='Only include events in filter', default='')
+args = parser.parse_args()
+
+if 'filter' in args:
+	filter = args.filter
 
 try:
 	import config
@@ -33,7 +43,17 @@ def createEvent(array):
 		if False != value:
 			event[name] = value
 
-	start = datetime.datetime.strptime(event['DTSTART'], '%Y%m%dT%H%M%S')
+	if filter:
+		if filter != event['SUMMARY']:
+			return {'minutes': 0}
+
+	try:
+		start = datetime.datetime.strptime(event['DTSTART'], '%Y%m%dT%H%M%S')
+	except ValueError as e:
+		print 'Assuming all day event, skipping ..'
+		event['minutes'] = 0
+		return event
+
 	event['DTSTART'] = start
 
 	end = datetime.datetime.strptime(event['DTEND'], '%Y%m%dT%H%M%S')
@@ -63,6 +83,8 @@ def parseFile(f):
 
 
 def main():
+	print "Mathing events with summary: \"%s\"" % ('Progr')
+
 	totalTime = 0
 
 	files = os.listdir(config.path + '/Events')
